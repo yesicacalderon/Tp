@@ -39,6 +39,18 @@ public class Cliente extends Actor {
 	public String toString() {
 		return "Cliente [apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni + ", contacto=" + contacto + "]";
 	}
-	
+
+	protected boolean validarIdentificadorUnico() {
+		boolean validar=false;
+		
+		while (this.dni>99999999) {
+			
+			validar=true;
+		}
+		
+		return validar;
+		
+		
+	}
 	
 }
