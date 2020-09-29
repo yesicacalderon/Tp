@@ -4,12 +4,13 @@ public class Cliente extends Actor {
 	
 	private String apellido;
 	private String nombre;
-	private int dni;
+	private Long dni;
+	
 	
 	public Cliente(int id, Contacto contacto) {
 		super(id, contacto);
-		// TODO Auto-generated constructor stub
 	}
+
 
 	public String getApellido() {
 		return apellido;
@@ -27,12 +28,16 @@ public class Cliente extends Actor {
 		this.nombre = nombre;
 	}
 
-	public int getDni() {
+	public long getDni() {
 		return dni;
 	}
 
-	public void setDni(int dni) {
-		this.dni = dni;
+	public void setDni(long dni) throws Exception {
+		if(validarIdentificadorUnico(dni)) {
+			
+			this.dni = dni;
+		}
+		
 	}
 
 	@Override
@@ -40,17 +45,20 @@ public class Cliente extends Actor {
 		return "Cliente [apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni + ", contacto=" + contacto + "]";
 	}
 
-	protected boolean validarIdentificadorUnico() {
-		boolean validar=false;
+	protected boolean validarIdentificadorUnico(long identificador) throws Exception{
 		
-		while (this.dni>99999999) {
+		if (identificador<99999999 && identificador>999999) {
 			
-			validar=true;
+			return true;
 		}
 		
-		return validar;
-		
+		throw new Exception("Dni no valido!!");
 		
 	}
+	
+
+	
+	
+		
 	
 }
