@@ -29,6 +29,12 @@ public class Contacto {
 	public void setUbicacion(Ubicacion ubicacion) {
 		this.ubicacion = ubicacion;
 	}
+	@Override
+	public String toString() {
+		return "Contacto: Email=" + email + ", Celular=" + celular + ", Ubicacion=" + ubicacion;
+	}
+	
+	
 	
 	
 }

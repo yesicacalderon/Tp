@@ -42,7 +42,7 @@ public class Cliente extends Actor {
 
 	@Override
 	public String toString() {
-		return "Cliente [apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni + ", contacto=" + contacto + "]";
+		return "Cliente: Apellido=" + apellido + ", Nombre=" + nombre + ", DNI=" + dni + contacto +"\n";
 	}
 
 	protected boolean validarIdentificadorUnico(long identificador) throws Exception{

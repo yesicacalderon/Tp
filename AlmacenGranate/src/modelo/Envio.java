@@ -53,6 +53,16 @@ public class Envio extends Entrega {
 		this.ubicacion = ubicacion;
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return "Envio: \nHora Hasta=" + horaHasta + ", Hora Desde=" + horaDesde + "\nEl costo de envio es de= $" + Math.round(getCosto()) + "\n"
+				+ ubicacion;
+	}
+
+
+
 	public void setCosto(Ubicacion ubicacionCliente, double costoFijo, double costoPorKm) {
 		
 	
@@ -83,14 +93,6 @@ public class Envio extends Entrega {
 		}
 	
 	
-	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		
-		
-		
-	
-		
-	}
-	   
+   
 	
 }

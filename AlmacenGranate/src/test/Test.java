@@ -25,7 +25,8 @@ public class Test {
 		Cliente cliente1= new Cliente(1, contact1);		
 		cliente1.setNombre("Yesica");
 		cliente1.setApellido("Calderon");
-		cliente1.setDni(35158028);		
+		cliente1.setDni(35158028);
+		System.out.println(cliente1);
 		
 		DiaRetiro retiro1=new DiaRetiro(1,4,LocalTime.of(9, 00),LocalTime.of(16, 00),15);
 		Comercio comercio1=new Comercio(12,null);
@@ -57,7 +58,7 @@ public class Test {
 		Envio envio1=new Envio(1, LocalDate.now(), false, LocalTime.now(), LocalTime.now(), ubicacion1);
 		
 		envio1.setCosto(ubicacion2, 400, 30);
-		System.out.println("El costo de envio es de $"+Math.round(envio1.getCosto()));//realizo redondeo
+		System.out.println(envio1);
 		
 	}
 
