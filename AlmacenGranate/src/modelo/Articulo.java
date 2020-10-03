@@ -59,7 +59,7 @@ public class Articulo {
 	
 	@Override
 	public String toString() {
-		return "Articulo: id=" + id + ", Nombre= " + nombre + ", Codigo de Barras= " + codBarras + ", Precio= $" + precio +"\n";
+		return "Articulo: id=" + id + ", Nombre= " + nombre + ", Codigo de Barras= " + codBarras + ", Precio= $" + precio;
 	}
 
 
