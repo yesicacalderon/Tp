@@ -4,8 +4,9 @@ public class itemCarrito {
 
 	private Articulo articulo;
 	private int cantidad;
+
 	public itemCarrito(Articulo articulo, int cantidad) {
-		super();
+		//super();
 		this.articulo = articulo;
 		this.cantidad = cantidad;
 	}
@@ -21,6 +22,9 @@ public class itemCarrito {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "itemCarrito = Articulo: " + articulo.getNombre() + " Cantidad: " +cantidad;
+	}
 }

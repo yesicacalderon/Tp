@@ -193,6 +193,7 @@ public class Comercio extends Actor {
 		boolean agregado = false;
 		int index = 0;
 		int id = 0;
+		//Buscamos si el dia de retiro recibido en los parametros ya se encuentran en lstDiaRetiro haciendo un while y validando uno por uno.
 		while (index < this.lstDiaRetiro.size() && agregado == false) {
 			if (this.lstDiaRetiro.get(index).getHoraDesde().equals(horaDesde)
 					&& this.lstDiaRetiro.get(index).getHoraHasta().equals(horaHasta)
@@ -200,6 +201,7 @@ public class Comercio extends Actor {
 				throw new Exception("Error! Dia de la semana y hora no disponibles");
 			index++;
 		}
+		//Verificamos el ultimo id agregado y le sumamos +1.
 		id = lstDiaRetiro.get(lstDiaRetiro.size() - 1).getId() + 1;
 		this.lstDiaRetiro.add(new DiaRetiro(id, diaSemana, horaDesde, horaHasta, intervalo));
 		agregado = true;
@@ -212,7 +214,7 @@ public class Comercio extends Actor {
 		return "Comercio: Nombre del comercio=" + nombreComercio + ", Cuit=" + cuit + ", Costo fijo=" + costoFijo
 				+ ", Costo Por Km=" + costoPorKm + ", Dia descuento=" + diaDescuento + ", Porcentaje Descuento Dia="
 				+ porcentajeDescuentoDia + ", Porcentaje Descuento Efectivo=" + porcentajeDescuentoEfectivo
-				+ " " + lstDiaRetiro + "Lista de Carrito=" + lstCarrito + "\n";
+				+ " " + lstDiaRetiro + "Lista de Carrito=" + lstCarrito;
 	}
 
 	public String converterLongToString(long data) throws Exception {

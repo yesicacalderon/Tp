@@ -18,8 +18,6 @@ public class Envio extends Entrega {
 		this.ubicacion = ubicacion;
 	}
 	
-	
-	
 	public Envio(int id, LocalDate fecha, boolean efectivo, LocalTime horaHasta, LocalTime horaDesde,
 			Ubicacion ubicacion) {
 		super(id, fecha, efectivo);
@@ -27,8 +25,6 @@ public class Envio extends Entrega {
 		this.horaDesde = horaDesde;
 		this.ubicacion = ubicacion;
 	}
-
-
 
 	public LocalTime getHoraHasta() {
 		return horaHasta;
@@ -54,34 +50,23 @@ public class Envio extends Entrega {
 	}
 	
 	
-	
 	@Override
 	public String toString() {
-		return "Envio: \nHora Hasta=" + horaHasta + ", Hora Desde=" + horaDesde + "\nEl costo de envio es de= $" + Math.round(getCosto()) + "\n"
-				+ ubicacion;
+		return "Envio: \nHora Hasta=" + horaHasta + ", Hora Desde=" + horaDesde + "\nEl costo de envio es de= $" + Math.round(getCosto()) + "\n" + ubicacion;
 	}
 
-
-
-	public void setCosto(Ubicacion ubicacionCliente, double costoFijo, double costoPorKm) {
-		
-	
-		
-		double distanciaKM=distanciaCoord(this.ubicacion.getLatitud(), //calculo de distancia en km
-				                              this.ubicacion.getLongitud(),
-				                               ubicacionCliente.getLatitud(),
-				                                 ubicacionCliente.getLongitud());  
+	public void setCosto(Ubicacion ubicacionCliente, double costoFijo, double costoPorKm) {	
+		double distanciaKM = distanciaCoord(
+			this.ubicacion.getLatitud(), //calculo de distancia en km
+			this.ubicacion.getLongitud(),
+			ubicacionCliente.getLatitud(),
+			ubicacionCliente.getLongitud());  
 		
 		this.costo=costoFijo+(costoPorKm*distanciaKM);
-		
-	
-		
-		
-	}
-	
+	}	
 	
 	public double distanciaCoord(double lat1, double lng1, double lat2, double lng2) {
-		double radioTierra = 6371; //en kilómetros
+		double radioTierra = 6371; //en kilï¿½metros
 		double dLat = Math.toRadians(lat2 - lat1);
 		double dLng = Math.toRadians(lng2 - lng1);
 		double sindLat = Math.sin(dLat / 2);
