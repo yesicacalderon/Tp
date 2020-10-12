@@ -13,8 +13,7 @@ public class Articulo {
 		this.nombre = nombre;
 		this.codBarras = codBarras;
 		this.precio = precio;
-	}
-	
+	}	
 
 	public Articulo() {
 		super();
@@ -79,7 +78,4 @@ public class Articulo {
 
 		return resultado;
 	}
-	
-	
-
 }

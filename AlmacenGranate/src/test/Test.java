@@ -11,39 +11,34 @@ import modelo.Comercio;
 import modelo.Contacto;
 import modelo.DiaRetiro;
 import modelo.Envio;
+import modelo.Entrega;
 import modelo.Ubicacion;
 import modelo.itemCarrito;
 import modelo.Carrito;
 
 public class Test {
 
-	private static Carrito carrito1;
-
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-
+		/*
 		//Crear Contacto y su ubicación.
 		Ubicacion ubicacion=new Ubicacion(-34.7667, -58.5659);
 		Contacto contact1=new Contacto("bj_000@hotmail.com", "1522613210" , ubicacion);
 
-		//Crear Cliente con el contacto creado.		
-		Cliente cliente1= new Cliente(1, contact1);		
-		cliente1.setNombre("Yesica");
-		cliente1.setApellido("Calderon");
-		cliente1.setDni(35158028);
-		System.out.println("****Datos del Cliente 1****");
+		//Crear Cliente con el contacto creado.			
+		Cliente cliente1= new Cliente(1, contact1, "Emiliano", "Vargas", 12345678, true);
+		System.out.println("****Datos del Cliente 2****");
 		System.out.println(cliente1);
 
-		//Creamos comercio (Id, Contacto null)
-		Comercio comercio1=new Comercio(1,null);
-		comercio1.setCuit(27351580289l);
-
-		/* RETIROS */
+		// RETIROS
 		//Creamos objeto del dia de retiro. (id, Jueves, LocalTime Hora desde 9am, LocalTime hora hasta 4pm, intervalo 15).		
-		DiaRetiro retiro1=new DiaRetiro(1,4,LocalTime.of(9, 00),LocalTime.of(16, 00),15);
+		DiaRetiro retiro1=new DiaRetiro(1,4,LocalTime.of(9, 00),LocalTime.of(16, 00),60);
 		//Creamos lista de dias de retiro.
 		List<DiaRetiro>lstDiaRetiro= new ArrayList <DiaRetiro>();
 		lstDiaRetiro.add(retiro1);
+
+		//Creamos comercio (Id, Contacto null)
+		Comercio comercio1=new Comercio(1, contact1, "Almacen Granate", 27351580289l, 100, 30, lstDiaRetiro, lstCarrito)
+		comercio1.setCuit(27351580289l);		
 
 		//Verificamos con un bloque try&catch que el turno esté disponible y no exista en el comercio.
 		comercio1.setLstDiaRetiro(lstDiaRetiro);
@@ -79,12 +74,17 @@ public class Test {
 		lstItemCarrito.add(new itemCarrito(articulo1, 2));
 		lstItemCarrito.add(new itemCarrito(articulo2, 3));
 		//Mostramos contenido de la lista
-		System.out.println(lstItemCarrito.get(0));
-		System.out.println(lstItemCarrito.get(1));
-		System.out.println("******\n");
+		int index = 0;
+		while (index < lstItemCarrito.size()) {
+			System.out.println(lstItemCarrito.get(index));
+			index++;
+		}
 
+		System.out.println("******\n");
+		//Crear Entrega
+		Entrega entrega1 = new Entrega(1, LocalDate.now(), true);
 		//Creamos carrito con la lista de items
-		Carrito carrito1 = new Carrito(1, LocalDate.now(), LocalTime.now(), true, 0, cliente1, lstItemCarrito);
+		Carrito carrito1 = new Carrito(1, LocalDate.now(), LocalTime.now(), true, 0, cliente1, lstItemCarrito, entrega1);
 		//toString de Carrito devuelve "Hay N items en el carrito" donde N es el size() de la lista de itemCarrito
 		System.out.println(carrito1);
 
@@ -99,10 +99,14 @@ public class Test {
 		//Creamos el envio y le cargamos el origen y destino creados.
 		Envio envio1=new Envio(1, LocalDate.now(), false, LocalTime.now(), LocalTime.now(), ubicacion1);		
 
-		envio1.setCosto(ubicacion2, 400, 30);
+		envio1.setCosto(ubicacion2, 50, 30);
 		System.out.println(envio1);		
 
 		//Calculamos el total del carrito con envio.
 		System.out.println("\n*** Total Carrito + Envio: " + carrito1.calcularTotalCarrito(envio1));
+
+		System.out.println("Prueba de date");
+		//System.out.println(carrito1.calcularTotalCarrito(envio1));		
+		*/
 	}
 }

@@ -14,17 +14,15 @@ public class Carrito {
 	private Cliente cliente;
 	private List<itemCarrito> lstItemCarrito;
 	private Entrega entrega;
-	public Carrito(int id, LocalDate fecha, LocalTime hora, boolean cerrado, double descuento, Cliente cliente,
-			List<itemCarrito> lstItemCarrito, Entrega entrega) {
+	public Carrito(int id, LocalDate fecha, LocalTime hora, boolean cerrado, Cliente cliente,
+			List<itemCarrito> lstItemCarrito) {
 		super();
 		this.id = id;
 		this.fecha = fecha;
 		this.hora = hora;
 		this.cerrado = cerrado;
-		this.descuento = descuento;
 		this.cliente = cliente;
 		this.lstItemCarrito = lstItemCarrito;
-		this.entrega = entrega;
 	}
 
 	//Constructor Carrito sin implementacion de entrega.
@@ -94,6 +92,7 @@ public class Carrito {
 		return "Carrito: Hay " + lstItemCarrito.size() + " items en el carrito.";
 	}
 
+	//El total de todos los articulos agregados al carro. Sin descuesnto alguno.
 	public Double calcularSubtotal() throws Exception {
 		//Corroboramos que hayan items en el carrito chequeando que la lista de items no esté vacia.
 		if (this.lstItemCarrito.get(0) == null){
@@ -110,11 +109,25 @@ public class Carrito {
 		return subtotal;
 	}
 
+	//Calcular total: Subtotal + Descuentos del dia o si paga en efectivo + Costo del envio. RECIBE: Envio y carrito.
 	public Double calcularTotalCarrito(Envio envio) throws Exception {
+		
 		double subtotal = this.calcularSubtotal();
-		double total = subtotal + envio.getCosto();
+		//Convertir fecha del carrito a numero.
+		Integer diaSemana = this.fecha.getDayOfWeek().getValue();
+		//Convertir fecha del descuento a numero.
+		Integer diaDescuento = 3;
+		Double descuento = 0.0;
 
-		return total;
+		if (diaSemana == diaDescuento) {
+			descuento = subtotal * 0.20; //Pedir el valor de Comercio.porcentajeDescuentoDia
+
+		}
+		else if (entrega.efectivo == true) {
+			descuento = subtotal * 0.10; //Pedir el valor de porcentajeDescuentoEfectivo
+		}
+		
+		return subtotal - descuento + envio.getCosto();
 	}
 		
 }

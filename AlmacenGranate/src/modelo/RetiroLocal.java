@@ -25,7 +25,4 @@ public class RetiroLocal extends Entrega {
 		return "RetiroLocal [horaEntrega=" + horaEntrega + ", id=" + id + ", fecha=" + fecha + ", efectivo=" + efectivo
 				+ "]";
 	}
-	
-	
-	
 }

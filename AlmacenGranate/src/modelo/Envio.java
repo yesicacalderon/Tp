@@ -3,7 +3,7 @@ package modelo;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Envio extends Entrega {
+public class Envio extends Entrega{
 
 	private LocalTime horaHasta;
 	private LocalTime horaDesde;
@@ -55,13 +55,17 @@ public class Envio extends Entrega {
 		return "Envio: \nHora Hasta=" + horaHasta + ", Hora Desde=" + horaDesde + "\nEl costo de envio es de= $" + Math.round(getCosto()) + "\n" + ubicacion;
 	}
 
-	public void setCosto(Ubicacion ubicacionCliente, double costoFijo, double costoPorKm) {	
+	public void setCosto(Ubicacion ubicacionCliente, double costoFijo, double costoPorKm) throws Exception{	
 		double distanciaKM = distanciaCoord(
 			this.ubicacion.getLatitud(), //calculo de distancia en km
 			this.ubicacion.getLongitud(),
 			ubicacionCliente.getLatitud(),
 			ubicacionCliente.getLongitud());  
 		
+		if (distanciaKM > 100) {
+			throw new Exception("El comercio no puede enviar a distancias mayores a 10");
+		}
+
 		this.costo=costoFijo+(costoPorKm*distanciaKM);
 	}	
 	
@@ -76,8 +80,4 @@ public class Envio extends Entrega {
 		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
 		return radioTierra * va2;
 		}
-	
-	
-   
-	
 }

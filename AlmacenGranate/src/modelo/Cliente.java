@@ -5,12 +5,19 @@ public class Cliente extends Actor {
 	private String apellido;
 	private String nombre;
 	private Long dni;
-	
+	private char sexo; // false: Femenino, true: Masculino
 	
 	public Cliente(int id, Contacto contacto) {
 		super(id, contacto);
 	}
 
+	public Cliente(int id, Contacto contacto, String nombre, String apellido, int dni, char sexo) throws Exception{
+		super(id, contacto);
+		this.nombre = nombre;
+		this.apellido = apellido;
+		setDni(dni);
+		this.sexo = sexo;
+	}
 
 	public String getApellido() {
 		return apellido;
@@ -36,29 +43,27 @@ public class Cliente extends Actor {
 		if(validarIdentificadorUnico(dni)) {
 			
 			this.dni = dni;
-		}
-		
+		}		
+	}
+
+	public char getSexo(){
+		return this.sexo;
+	}
+
+	public void setSexo(char sexo){
+		this.sexo = sexo;
 	}
 
 	@Override
 	public String toString() {
-		return "Cliente: Apellido=" + apellido + ", Nombre=" + nombre + ", DNI=" + dni + contacto;
+		return "Cliente: Apellido=" + this.apellido + ", Nombre=" + this.nombre + ", DNI=" + this.dni + this.contacto;
 	}
 
-	protected boolean validarIdentificadorUnico(long identificador) throws Exception{
-		
+	protected boolean validarIdentificadorUnico(long identificador) throws Exception{		
 		if (identificador<99999999 && identificador>999999) {
 			
 			return true;
-		}
-		
-		throw new Exception("Dni no valido!!");
-		
+		}		
+		throw new Exception("Dni no valido!!");		
 	}
-	
-
-	
-	
-		
-	
 }
