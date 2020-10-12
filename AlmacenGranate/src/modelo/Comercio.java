@@ -212,7 +212,7 @@ public class Comercio extends Actor {
 		return "Comercio: Nombre del comercio=" + nombreComercio + ", Cuit=" + cuit + ", Costo fijo=" + costoFijo
 				+ ", Costo Por Km=" + costoPorKm + ", Dia descuento=" + diaDescuento + ", Porcentaje Descuento Dia="
 				+ porcentajeDescuentoDia + ", Porcentaje Descuento Efectivo=" + porcentajeDescuentoEfectivo
-				+ " " + lstDiaRetiro + "Lista de Carrito=" + lstCarrito + "\n";
+				+ "\n" + lstDiaRetiro + "Lista de Carrito=" + lstCarrito + "\n";
 	}
 
 	public String converterLongToString(long data) throws Exception {
@@ -242,6 +242,21 @@ public class Comercio extends Actor {
 	public boolean esMasculino(String tipo) {
 
 		return (tipo.equalsIgnoreCase(TIPO_MASCULINO)) ? true : false;
+	}
+	
+	
+	public double calcularDescuentoDia(int diaDescuento, double porcentajeDescuentoDia){
+		
+		double descuento=0;
+		
+		if(diaDescuento==this.diaDescuento) {
+			
+			
+			
+		}
+		
+		
+		return descuento;
 	}
 
 }

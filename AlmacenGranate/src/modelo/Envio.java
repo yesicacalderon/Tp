@@ -57,8 +57,8 @@ public class Envio extends Entrega {
 	
 	@Override
 	public String toString() {
-		return "Envio: \nHora Hasta=" + horaHasta + ", Hora Desde=" + horaDesde + "\nEl costo de envio es de= $" + Math.round(getCosto()) + "\n"
-				+ ubicacion;
+		return  "\nEl costo de envio es de= $" + Math.round(getCosto()) + "\n"
+				;
 	}
 
 
