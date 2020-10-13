@@ -32,4 +32,10 @@ public class Turno {
 	public void setOcupado(boolean ocupado) {
 		this.ocupado = ocupado;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "Este turno pertenece al dia: " + dia + " Con la hora de. " + hora + " Y se encuentra: " + ocupado + "\n";
+	}
 }

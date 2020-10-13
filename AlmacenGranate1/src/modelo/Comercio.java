@@ -1,5 +1,8 @@
 package modelo;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
+
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +18,7 @@ public class Comercio extends Actor {
 	private int porcentajeDescuentoEfectivo = 10;
 	private List<DiaRetiro> lstDiaRetiro;
 	private List<Carrito> lstCarrito;
-	
+
 	private List<Turno> lstTurno = new ArrayList<Turno>();
 
 	private static String TIPO_MASCULINO = "20";
@@ -24,7 +27,8 @@ public class Comercio extends Actor {
 
 	private static Integer[] SERIE_VALORES = { 5, 4, 3, 2, 7, 6, 5, 4, 3, 2 };
 
-	public Comercio(int id, Contacto contacto, String nombreComercio, long cuit, double costoFijo, double costoPorKm, List<DiaRetiro> lstDiaRetiro,	List<Carrito> lstCarrito) {
+	public Comercio(int id, Contacto contacto, String nombreComercio, long cuit, double costoFijo, double costoPorKm,
+			List<DiaRetiro> lstDiaRetiro, List<Carrito> lstCarrito) {
 		super(id, contacto);
 		this.nombreComercio = nombreComercio;
 		this.cuit = cuit;
@@ -189,7 +193,16 @@ public class Comercio extends Actor {
 		boolean agregado = false;
 		int index = 0;
 		int id = 0;
-		//Buscamos si el dia de retiro recibido en los parametros ya se encuentran en lstDiaRetiro haciendo un while y validando uno por uno.
+		// Consulta si hay una lista en Comercio. Si no hay crea el primer item.
+		if (this.lstDiaRetiro == null) {
+			this.lstDiaRetiro = new ArrayList<DiaRetiro>();
+			this.lstDiaRetiro.add(new DiaRetiro(id, diaSemana, horaDesde, horaHasta, intervalo));
+			// generarTurno(dia, hora, ocupado, new DiaRetiro(id, diaSemana, horaDesde,
+			// horaHasta, intervalo));
+			agregado = true;
+		}
+		// Buscamos si el dia de retiro recibido en los parametros ya se encuentran en
+		// lstDiaRetiro haciendo un while y validando uno por uno.
 		while (index < this.lstDiaRetiro.size() && agregado == false) {
 			if (this.lstDiaRetiro.get(index).getHoraDesde().equals(horaDesde)
 					&& this.lstDiaRetiro.get(index).getHoraHasta().equals(horaHasta)
@@ -197,20 +210,21 @@ public class Comercio extends Actor {
 				throw new Exception("Error! Dia de la semana y hora no disponibles");
 			index++;
 		}
-		//Verificamos el ultimo id agregado y le sumamos +1.
-		id = lstDiaRetiro.get(lstDiaRetiro.size() - 1).getId() + 1;
-		this.lstDiaRetiro.add(new DiaRetiro(id, diaSemana, horaDesde, horaHasta, intervalo));
-		agregado = true;
+		// Verificamos el ultimo id agregado y le sumamos +1.
+		if (agregado == false) {
+			id = lstDiaRetiro.get(lstDiaRetiro.size() - 1).getId() + 1;
+			this.lstDiaRetiro.add(new DiaRetiro(id, diaSemana, horaDesde, horaHasta, intervalo));
+			agregado = true;
+		}
 		return agregado;
-
 	}
 
 	@Override
 	public String toString() {
 		return "Comercio: Nombre del comercio=" + nombreComercio + ", Cuit=" + cuit + ", Costo fijo=" + costoFijo
 				+ ", Costo Por Km=" + costoPorKm + ", Dia descuento=" + diaDescuento + ", Porcentaje Descuento Dia="
-				+ porcentajeDescuentoDia + ", Porcentaje Descuento Efectivo=" + porcentajeDescuentoEfectivo
-				+ " " + lstDiaRetiro + "Lista de Carrito=" + lstCarrito;
+				+ porcentajeDescuentoDia + ", Porcentaje Descuento Efectivo=" + porcentajeDescuentoEfectivo + " "
+				+ lstDiaRetiro + "Lista de Carrito=" + lstCarrito;
 	}
 
 	public String converterLongToString(long data) throws Exception {
@@ -241,9 +255,128 @@ public class Comercio extends Actor {
 
 		return (tipo.equalsIgnoreCase(TIPO_MASCULINO)) ? true : false;
 	}
-	
-	
-	
-	
+
+//	public ArrayList<LocalTime> traerHoraRetiro(LocalDate fecha){
+//		//Leer lista de carritos y obtener los que les coincida la fecha.
+//		ArrayList<LocalTime> lstHoraRetiro = new ArrayList<LocalTime>();
+//		int index = 0;
+//		while (index < this.lstCarrito.size()){
+//			Carrito carrito = lstCarrito.get(index);
+//			if (carrito.getFecha() == fecha) {
+//				Entrega entrega = carrito.getEntrega();
+//				RetiroLocal horaEntrega = (RetiroLocal entrega.getEntrega()).getHoraEntrega();
+//
+//				RetiroLocal sub = new subclass();
+//				superclass sup = (superclass) sub; 
+//				subclass theSub = (subclass) sup;
+//				theSub.displaySub();
+//			}
+//			index ++;
+//		}
+//		//De estos carritos sacamos sus horas de Retiro (si tienen entrega, sino excep)
+//
+//		return lstHoraRetiro;
+//	}
+
+	public ArrayList<Turno> generarAgenda(LocalDate fecha) {
+		// Generamos los turnos disponibles
+		// Determinar la fecha qué dia cae. Si es martes, buscar en los diaRetiro de los
+		// martes cuantos turnos entran.
+		Integer dia = fecha.getDayOfWeek().getValue();
+		// Creamos el ArrayList que contendrá los turnos que crearemos.
+		ArrayList<Turno> lstAgenda = new ArrayList<Turno>();
+		// Ver en lstDiaRetiro que dias hay con el dia sacado de arriba.
+		int index = 0;
+		while (index < this.lstDiaRetiro.size()) {
+			DiaRetiro diaRetiro = this.lstDiaRetiro.get(index);
+			LocalTime horaDesde = diaRetiro.getHoraDesde();
+			if (diaRetiro.getDiaSemana() == dia) {
+				// si coincide un dia de retiro con un item de la lista de carritos, entonces es
+				// porque ese turno está ocupado.
+				int indexCarrito = 0;
+				while (indexCarrito < this.lstCarrito.size()) {
+					Carrito carrito = this.lstCarrito.get(indexCarrito);
+					if (carrito.getFecha().getDayOfWeek().getValue() == dia) {
+						Turno turno = new Turno(fecha, carrito.getHora(), true);
+						lstAgenda.add(turno);
+					} else {
+						Turno turno = new Turno(fecha, horaDesde, false);
+						lstAgenda.add(turno);
+						horaDesde = horaDesde.plusMinutes(diaRetiro.getIntervalo());
+					}
+					indexCarrito++;
+				}
+			}
+			index++;
+		}
+
+		return lstAgenda;
+	}
+
+	public Integer convertirFecha(LocalDate fecha) {
+		Integer dia = fecha.getDayOfWeek().getValue();
+		return dia;
+	}
+
+	public ArrayList<Turno> generarTurnosLibres(LocalDate fecha) {
+		// Determinar la fecha qué dia cae. Si es martes, buscar en los diaRetiro de los
+		// martes cuantos turnos entran.
+		Integer dia = fecha.getDayOfWeek().getValue();
+		// Creamos el ArrayList que contendrá los turnos que crearemos.
+		ArrayList<Turno> lstTurno = new ArrayList<Turno>();
+		// Ver en lstDiaRetiro que dias hay con el dia sacado de arriba.
+		int index = 0;
+		while (index < this.lstDiaRetiro.size()) {
+			DiaRetiro diaRetiro = this.lstDiaRetiro.get(index);
+			if (diaRetiro.getDiaSemana() == dia) {
+				// Buscar cuantos turnos entran en el diaRetiro
+				// Calcular cuantos minutos hay entre hora desde y hora hasta
+				Long entre = MINUTES.between(diaRetiro.getHoraDesde(), diaRetiro.getHoraHasta());
+				Integer minutosEntre = entre.intValue();
+				// Dividir minutosEntre por intervalo. Nos dará la cantidad de turnos
+				// disponibles para ese dia (redondear para abajo).
+				Integer turnosDisponibles = minutosEntre / diaRetiro.getIntervalo();
+
+				// Generaremos los N turnos.
+				// Hacemos getHoraDesde del diaRetiro para almacenar la hora del primer turno.
+				LocalTime horaDesde = diaRetiro.getHoraDesde();
+				for (int i = 0; i < turnosDisponibles; i++) {
+					// Creamos el turno con la fecha que recibimos al inicio de la función, la hora
+					// desde, y seteamos el turno como desocupado (false).
+					Turno turno = new Turno(fecha, horaDesde, false);
+					// Agregamos el turno al ArrayList
+					lstTurno.add(turno);
+					// Sumamos los minutos del intervalo para el proximo turno.
+					horaDesde = horaDesde.plusMinutes(diaRetiro.getIntervalo());
+				}
+			}
+			index++;
+		}
+		return lstTurno;
+	}
+
+	public ArrayList<Turno> traerTurnosOcupados(LocalDate fecha) throws Exception {
+		// Si la lista de carritos está vacia (No hay turnos dados) entonces arrojamos
+		// excepcion.
+		if (this.lstCarrito == null) {
+			throw new Exception("No hay turnos ocupados.");
+		}
+		// Creamos el ArrayList que contendrá los turnos que crearemos.
+		ArrayList<Turno> lstTurnosOcupados = new ArrayList<Turno>();
+		// Ver en lstCarrito que carritos con el dia asignado con el dia sacado de
+		// arriba.
+		int index = 0;
+		while (index < this.lstCarrito.size()) {
+			Carrito carrito = this.lstCarrito.get(index);
+			if (carrito.getFecha() == fecha) {
+				// Analizamos las hora de los carritos para determinar los turnos ocupados.
+				Turno turno = new Turno(fecha, carrito.getHora(), true);
+				// Creamos el turno en base a la hora del carro para genererar el turno ocupado
+				lstTurnosOcupados.add(turno);
+			}
+			index++;
+		}
+		return lstTurnosOcupados;
+	}
 
 }

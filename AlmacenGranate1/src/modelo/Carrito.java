@@ -138,31 +138,6 @@ public class Carrito {
 		return subtotalItem;
 	}
 
-//	//Calcular total: Subtotal + Descuentos del dia o si paga en efectivo + Costo del envio. RECIBE: Envio y carrito.
-//	public Double calcularTotalCarrito(Envio envio) throws Exception {
-//		
-//		double subtotal = this.calcularSubtotal();
-//		/*
-//		Convertir fecha del carrito a numero.
-//		DayOfWeek diaSemana = this.fecha.getDayOfWeek();
-//		Convertir fecha del descuento a numero.
-//		DayOfWeek diaDescuento = DayOfWeek 3;
-//		System.out.println(numero.getValue());
-//		*/
-//		Integer diaSemana = 2; //Fecha Martes
-//		Integer diaDescuento = 3; //Descuento Miercoles
-//
-//		if (diaSemana == diaDescuento) {
-//			Double descuento = subtotal * 0.20; //Pedir el valor de Comercio.porcentajeDescuentoDia
-//			return subtotal - descuento + envio.getCosto();
-//		}
-//		else (entrega.efectivo) {
-//			Double descuento = subtotal * 0.10; //Pedir el valor de porcentajeDescuentoEfectivo
-//			return subtotal - descuento + envio.getCosto(); //Pedir el valor de Entrega.efectivo
-//		}
-//		
-//		return subtotal + envio.getCosto();
-//	}
 
 	public boolean cantidadRepetida(ItemCarrito item) {
 

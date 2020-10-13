@@ -8,7 +8,7 @@ public class DiaRetiro {
 	private int diaSemana;
 	private LocalTime horaDesde;
 	private LocalTime horaHasta;
-	private int intervalo;
+	private Integer  intervalo;
 	public DiaRetiro(int id, int diaSemana, LocalTime horaDesde, LocalTime horaHasta, int intervalo) {
 		super();
 		this.id = id;

@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Articulo;
+import modelo.Carrito;
 import modelo.Cliente;
 import modelo.Comercio;
 import modelo.Contacto;
 import modelo.DiaRetiro;
 import modelo.Envio;
-import modelo.Entrega;
-import modelo.Ubicacion;
 import modelo.ItemCarrito;
 import modelo.RetiroLocal;
-import modelo.Carrito;
+import modelo.Turno;
+import modelo.Ubicacion;
 
 public class Test {
 
@@ -25,7 +25,6 @@ public class Test {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		
-		 Carrito carrito1;
 		
 		RetiroLocal retiroLocal = new RetiroLocal(1,  LocalDate.now(), false, LocalTime.now());
 		
@@ -43,7 +42,7 @@ public class Test {
 		System.out.println("****Datos del Cliente 1****");
 		System.out.println(cliente1);
 		
-		Cliente cliente2= new Cliente(2, contact1, "Emiliano", "Vargas", 12345678, true);
+		Cliente cliente2= new Cliente(2, contact1, "Emiliano", "Vargas", 12345678, 'f');
 		System.out.println("****Datos del Cliente 2****");
 		System.out.println(cliente2);
 
@@ -66,13 +65,27 @@ public class Test {
 		//Verificamos con un bloque try&catch que el turno esté disponible y no exista en el comercio.
 		comercio1.setLstDiaRetiro(lstDiaRetiro);
 		try {
-			comercio1.agregarDiaRetiro(4,LocalTime.of(10, 00),LocalTime.of(16, 00),15);
+			comercio1.agregarDiaRetiro(1,LocalTime.of(10, 00),LocalTime.of(16, 00),15);
+			comercio1.agregarDiaRetiro(2, LocalTime.of(12, 00), LocalTime.of(13, 00), 15);
+			comercio1.agregarDiaRetiro(4, LocalTime.of(15, 00), LocalTime.of(16, 00), 15);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		
+		System.out.println("***Turnos disponibles para el dia Lunes***");
 		System.out.println("Lista dia de retiro: " + comercio1.getLstDiaRetiro());
+		
+		
+		ArrayList<Turno> listaDeTurnos = comercio1.generarTurnosLibres(LocalDate.of(2020, 10, 12));
+
+		int indexTurno = 0;
+		while (indexTurno < listaDeTurnos.size()) {
+			System.out.println(listaDeTurnos.get(indexTurno));
+			indexTurno++;
+		}
+		
 		
 		//Creamos Articulos
 		System.out.println("***Articulos en Gondola***");
