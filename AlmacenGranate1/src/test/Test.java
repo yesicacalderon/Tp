@@ -140,7 +140,7 @@ public class Test {
 		System.out.println("******\n");
 		
 		System.out.println("Descuento: $"+ carrito.calcularDescuentoCarrito(comercio1.getDiaDescuento(), comercio1.getPorcentajeDescuentoDia(), comercio1.getPorcentajeDescuentoEfectivo()));
-		
+		carrito.setCerrado(true);
 		System.out.println("\n******\n");
 		
 		//total a pagar- retira en local
@@ -169,9 +169,8 @@ public class Test {
 		System.out.println("***Total a pagar Carrito: $"+carrito2.totalAPagarCarrito());
 		envio.setCosto(ubicacion, comercio1.getCostoFijo(), comercio1.getCostoPorKm());
 		System.out.println("\n***Costo de envio: $"+envio.getCosto());
-		
-		
-		
+		carrito2.setCerrado(true);
+		System.out.println("\n total a pagar, incluyendo envio: $"+(carrito2.totalAPagarCarrito()+envio.getCosto()));		
 			
 	}
 }
