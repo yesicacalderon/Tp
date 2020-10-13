@@ -56,7 +56,7 @@ public class Envio extends Entrega{
 	}
 
 	public void setCosto(Ubicacion ubicacionCliente, double costoFijo, double costoPorKm) throws Exception{	
-		double distanciaKM = distanciaCoord(
+		double distanciaKM = traerUbicacion(
 			this.ubicacion.getLatitud(), //calculo de distancia en km
 			this.ubicacion.getLongitud(),
 			ubicacionCliente.getLatitud(),
@@ -69,7 +69,7 @@ public class Envio extends Entrega{
 		this.costo=costoFijo+(costoPorKm*distanciaKM);
 	}	
 	
-	public double distanciaCoord(double lat1, double lng1, double lat2, double lng2) {
+	public double traerUbicacion(double lat1, double lng1, double lat2, double lng2) {
 		double radioTierra = 6371; //en kil�metros
 		double dLat = Math.toRadians(lat2 - lat1);
 		double dLng = Math.toRadians(lng2 - lng1);

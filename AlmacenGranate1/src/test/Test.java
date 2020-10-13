@@ -55,18 +55,14 @@ public class Test {
 		comercio1.setCostoFijo(400);
 		comercio1.setCostoPorKm(100);
 
-		/* RETIROS */
-		//Creamos objeto del dia de retiro. (id, Jueves, LocalTime Hora desde 9am, LocalTime hora hasta 4pm, intervalo 15).		
-		DiaRetiro retiro1=new DiaRetiro(1,4,LocalTime.of(9, 00),LocalTime.of(16, 00),15);
-		//Creamos lista de dias de retiro.
-		List<DiaRetiro>lstDiaRetiro= new ArrayList <DiaRetiro>();
-		lstDiaRetiro.add(retiro1);
+
 
 		//Verificamos con un bloque try&catch que el turno esté disponible y no exista en el comercio.
-		comercio1.setLstDiaRetiro(lstDiaRetiro);
+		
 		try {
 			comercio1.agregarDiaRetiro(1,LocalTime.of(10, 00),LocalTime.of(16, 00),15);
 			comercio1.agregarDiaRetiro(2, LocalTime.of(12, 00), LocalTime.of(13, 00), 15);
+			comercio1.agregarDiaRetiro(4,LocalTime.of(9, 00),LocalTime.of(16, 00),15);
 			comercio1.agregarDiaRetiro(4, LocalTime.of(15, 00), LocalTime.of(16, 00), 15);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
